@@ -71,6 +71,8 @@ function pushUtmSavedEvent(entry) {
       utm_source: entry.source,
       utm_medium: entry.medium,
       utm_campaign: entry.campaign,
+      utm_term: entry.term || "",
+      utm_content: entry.content || "",
       utm_ts: entry.ts,
     });
     sessionStorage.setItem("last_utm_saved_ts", String(entry.ts));
@@ -92,6 +94,8 @@ function pushUtmCopiedEvent(entry) {
       utm_source: entry.source,
       utm_medium: entry.medium,
       utm_campaign: entry.campaign,
+      utm_term: entry.term || "",
+      utm_content: entry.content || "",
       utm_ts: entry.ts,
     });
     sessionStorage.setItem("last_utm_copied_ts", String(entry.ts));
@@ -171,6 +175,8 @@ function copyUrl() {
     source: sanitize($("utmSource").value),
     medium: sanitize($("utmMedium").value),
     campaign: sanitize($("utmCampaign").value),
+    term: sanitize($("utmTerm").value),
+    content: sanitize($("utmContent").value),
     ts: Date.now(),
   };
 
@@ -181,12 +187,11 @@ function copyUrl() {
         t.textContent = "✓ Copiado";
         setTimeout(() => (t.textContent = "Copiar"), 2000);
       }
+      // push to dataLayer reliably after copy (deduped by ts)
+      pushUtmCopiedEvent(entry);
     },
     (err) => console.error("Failed to copy URL: ", err)
   );
-
-  // push to dataLayer reliably after copy (deduped by ts)
-  pushUtmCopiedEvent(entry);
 }
 
 function saveToHistory() {
@@ -199,6 +204,8 @@ function saveToHistory() {
     source: sanitize($("utmSource").value),
     medium: sanitize($("utmMedium").value),
     campaign: sanitize($("utmCampaign").value),
+    term: sanitize($("utmTerm").value),
+    content: sanitize($("utmContent").value),
     date: new Date().toLocaleDateString("es-CO", {
       day: "2-digit",
       month: "short",
@@ -242,8 +249,27 @@ function renderHistory() {
 }
 
 function copyHistoryUrl(i) {
-  const u = getHistory()[i]?.url;
-  if (u) navigator.clipboard.writeText(u);
+  const entry = getHistory()[i];
+  const u = entry?.url;
+  if (u) {
+    navigator.clipboard.writeText(u).then(
+      () => {
+        // push a dataLayer event for copied history item (use existing ts from history entry)
+        // if history entry lacks ts, attach a new one (dedupe still works)
+        const pushEntry = {
+          url: entry.url,
+          source: entry.source || "",
+          medium: entry.medium || "",
+          campaign: entry.campaign || "",
+          term: entry.term || "",
+          content: entry.content || "",
+          ts: entry.ts || Date.now(),
+        };
+        pushUtmCopiedEvent(pushEntry);
+      },
+      (err) => console.error("Failed to copy history URL: ", err)
+    );
+  }
 }
 function loadHistory(i) {
   const e = getHistory()[i];
