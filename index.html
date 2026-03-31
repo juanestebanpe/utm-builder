@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Generador de URLs con parámetros UTM - Neosocios" />
+  <title>UTM Builder · Neosocios</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+<div class="container">
+
+  <header class="header">
+    <div>
+      <p class="header__eyebrow">by Juan Esteban Peña</p>
+      <h1 class="header__title">NEOSOCIOS</h1>
+      <div class="header__divider"></div>
+      <p class="header__subtitle">Campaign URL Builder</p>
+    </div>
+    <p class="header__desc">Genera URLs con UTMs limpias · consistentes · sin errores</p>
+  </header>
+
+  <section class="card">
+    <div class="section-label">
+      <div class="section-label__bar"></div>
+      <span class="section-label__text">Parámetros de campaña</span>
+    </div>
+
+    <div class="field">
+      <label class="field__label" for="baseUrl">URL Base <span class="required">*</span></label>
+      <input id="baseUrl" type="url" placeholder="https://neosocios.com/landing" />
+    </div>
+
+    <div class="grid-2">
+      <div class="field" style="margin-bottom:0;">
+        <label class="field__label" for="utmSource">utm_source <span class="required">*</span></label>
+        <div class="field__row">
+          <select id="sourcePreset" onchange="applyPreset()">
+            <option value="">Preset</option>
+            <option value="google">Google</option>
+            <option value="meta">Meta</option>
+            <option value="tiktok">TikTok</option>
+            <option value="email">Email</option>
+            <option value="instagram">Instagram</option>
+            <option value="youtube">YouTube</option>
+            <option value="linkedin">LinkedIn</option>
+            <option value="whatsapp">WhatsApp</option>
+          </select>
+          <input id="utmSource" type="text" placeholder="google, meta..." />
+        </div>
+      </div>
+      <div class="field" style="margin-bottom:0;">
+        <label class="field__label" for="utmMedium">utm_medium <span class="required">*</span></label>
+        <div class="field__row">
+          <select id="mediumPreset" onchange="applyMediumPreset()">
+            <option value="">Preset</option>
+            <option value="cpc">cpc</option>
+            <option value="organic">organic</option>
+            <option value="email">email</option>
+            <option value="social">social</option>
+            <option value="referral">referral</option>
+            <option value="display">display</option>
+            <option value="video">video</option>
+            <option value="sms">sms</option>
+          </select>
+          <input id="utmMedium" type="text" placeholder="cpc, email..." />
+        </div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="field__label" for="utmCampaign">utm_campaign <span class="required">*</span></label>
+      <input id="utmCampaign" type="text" placeholder="black-friday-2026, lanzamiento-producto..." />
+    </div>
+
+    <div class="grid-2">
+      <div class="field" style="margin-bottom:0;">
+        <label class="field__label" for="utmTerm">utm_term <span class="optional">· opcional</span></label>
+        <input id="utmTerm" type="text" placeholder="zapatos, running..." />
+      </div>
+      <div class="field" style="margin-bottom:0;">
+        <label class="field__label" for="utmContent">utm_content <span class="optional">· opcional</span></label>
+        <input id="utmContent" type="text" placeholder="banner-dorado, cta-compra..." />
+      </div>
+    </div>
+
+    <p class="field__hint" style="margin-top:1rem;">
+      Espacios → guiones &nbsp;·&nbsp; Todo en minúsculas &nbsp;·&nbsp; Automático
+    </p>
+
+    <div class="btn-row">
+      <button class="btn-primary" onclick="saveToHistory()">Guardar en historial</button>
+      <button class="btn-secondary" onclick="clearForm()">Limpiar</button>
+    </div>
+  </section>
+
+  <section id="previewCard" class="card card--preview hidden">
+    <div class="preview-header">
+      <div class="section-label" style="margin-bottom:0;">
+        <div class="section-label__bar"></div>
+        <span class="section-label__text">URL Generada</span>
+      </div>
+      <button class="btn-copy" onclick="copyUrl()">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+        </svg>
+        <span id="copyBtnText">Copiar</span>
+      </button>
+    </div>
+    <div class="url-box">
+      <p id="urlPreview" class="url-text"></p>
+    </div>
+    <div id="paramsBreakdown" class="params-badges"></div>
+  </section>
+
+  <div id="emptyPreview" class="empty-state">
+    <div class="empty-state__icon">🔗</div>
+    <p class="empty-state__text">Completa los campos requeridos para ver la URL en tiempo real.</p>
+  </div>
+
+  <section class="card card--history">
+    <div class="history-header">
+      <div class="section-label" style="margin-bottom:0;">
+        <div class="section-label__bar"></div>
+        <div class="history-meta">
+          <p class="history-title">Historial</p>
+          <p class="history-sub">Últimas 20 URLs · localStorage</p>
+        </div>
+      </div>
+      <button class="btn-clear-all" onclick="clearHistory()">Borrar todo</button>
+    </div>
+    <div id="historyList" class="history-list">
+      <p id="emptyHistory" class="history-empty">No hay URLs guardadas todavía.</p>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer__divider"></div>
+    <p class="footer__brand">Neosocios</p>
+    <p class="footer__by">by Juan Esteban Peña</p>
+  </footer>
+
+</div>
+<script src="app.js"></script>
+</body>
+</html>
