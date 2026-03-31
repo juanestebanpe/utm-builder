@@ -79,6 +79,27 @@ function pushUtmSavedEvent(entry) {
   }
 }
 
+// helper: push utm_copied event once per copy action (dedupe via ts)
+function pushUtmCopiedEvent(entry) {
+  try {
+    if (!entry || !entry.ts) return;
+    const last = sessionStorage.getItem("last_utm_copied_ts");
+    if (String(last) === String(entry.ts)) return; // already pushed this copy
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: "utm_copied",
+      utm_url: entry.url,
+      utm_source: entry.source,
+      utm_medium: entry.medium,
+      utm_campaign: entry.campaign,
+      utm_ts: entry.ts,
+    });
+    sessionStorage.setItem("last_utm_copied_ts", String(entry.ts));
+  } catch (e) {
+    console.warn("dataLayer copied push failed", e);
+  }
+}
+
 function buildUrl() {
   const base = $("baseUrl").value.trim(),
     source = sanitize($("utmSource").value),
@@ -143,11 +164,29 @@ function applyMediumPreset() {
 function copyUrl() {
   const url = buildUrl();
   if (!url) return;
-  navigator.clipboard.writeText(url).then(() => {
-    const t = $("copyBtnText");
-    t.textContent = "✓ Copiado";
-    setTimeout(() => (t.textContent = "Copiar"), 2000);
-  });
+
+  // build a small entry object like saveToHistory uses (ts used for dedupe)
+  const entry = {
+    url,
+    source: sanitize($("utmSource").value),
+    medium: sanitize($("utmMedium").value),
+    campaign: sanitize($("utmCampaign").value),
+    ts: Date.now(),
+  };
+
+  navigator.clipboard.writeText(url).then(
+    () => {
+      const t = $("copyBtnText");
+      if (t) {
+        t.textContent = "✓ Copiado";
+        setTimeout(() => (t.textContent = "Copiar"), 2000);
+      }
+    },
+    (err) => console.error("Failed to copy URL: ", err)
+  );
+
+  // push to dataLayer reliably after copy (deduped by ts)
+  pushUtmCopiedEvent(entry);
 }
 
 function saveToHistory() {
