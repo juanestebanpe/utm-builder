@@ -1,8 +1,14 @@
-/* ============================================================
-   UTM Builder · Neosocios — Identidad Visual Juan Esteban Peña
-   Paleta: #000 · #757575 · #DDDDDD · #FFFFFF · #CC9966 · #FFBB77
-   Tipografía: Helvetica · Times New Roman (self-hosted)
-   ============================================================ */
+
+/* Variables de color para contraste mejorado */
+:root{
+  --text-primary: #FFFFFF;
+  --text-muted:   #D9D9D9;
+  --text-subtle:  #BFBFBF;
+  --note-accent:  #E6D2B0; /* para hints/notes más legibles */
+  --accent-gold:  #CC9966;
+  --accent-light: #FFBB77;
+  --muted-dark:   #CFCFCF;
+}
 
 /* ── @font-face: Helvetica ─────────────────────────────────── */
 
@@ -112,7 +118,7 @@ body {
   min-height: 100vh;
   font-family: 'Helvetica', Arial, sans-serif;
   font-weight: 400;
-  color: #FFFFFF;
+  color: var(--text-primary);
   background: linear-gradient(180deg, #000000 0%, #0d0d0d 60%, #1a1400 100%);
   padding: 2rem 1rem;
 }
@@ -121,7 +127,7 @@ body {
 
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: #111; }
-::-webkit-scrollbar-thumb { background: #CC9966; border-radius: 4px; }
+::-webkit-scrollbar-thumb { background: var(--accent-gold); border-radius: 4px; }
 
 /* ── Layout ────────────────────────────────────────────────── */
 
@@ -137,7 +143,7 @@ body {
   font-size: 10px;
   letter-spacing: 0.35em;
   text-transform: uppercase;
-  color: #757575;
+  color: var(--text-muted);
   margin: 0 0 0.25rem;
 }
 
@@ -146,7 +152,7 @@ body {
   font-weight: 700;
   font-size: 2.5rem;
   letter-spacing: -0.05em;
-  color: #FFFFFF;
+  color: var(--text-primary);
   line-height: 1;
   margin: 0;
 }
@@ -154,7 +160,7 @@ body {
 .header__divider {
   width: 96px;
   height: 1px;
-  background: linear-gradient(90deg, #CC9966, #FFBB77, #CC9966);
+  background: linear-gradient(90deg, var(--accent-gold), var(--accent-light), var(--accent-gold));
   margin: 0.75rem auto 1rem;
   border-radius: 999px;
 }
@@ -165,7 +171,7 @@ body {
   font-style: italic;
   font-size: 1rem;
   letter-spacing: -0.04em;
-  color: #CC9966;
+  color: var(--accent-gold);
   margin: 0 0 0.75rem;
 }
 
@@ -174,7 +180,7 @@ body {
   font-weight: 300;
   font-size: 11px;
   letter-spacing: 0.08em;
-  color: #757575;
+  color: var(--text-subtle);
   margin: 0;
 }
 
@@ -211,7 +217,7 @@ body {
   width: 4px;
   height: 20px;
   border-radius: 999px;
-  background: linear-gradient(180deg, #FFBB77, #CC9966);
+  background: linear-gradient(180deg, var(--accent-light), var(--accent-gold));
   flex-shrink: 0;
 }
 
@@ -221,7 +227,7 @@ body {
   font-size: 10px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: #DDDDDD;
+  color: #EEEEEE;
 }
 
 /* ── Form fields ───────────────────────────────────────────── */
@@ -235,18 +241,18 @@ body {
   font-size: 10px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #757575;
+  color: var(--text-subtle);
   margin-bottom: 0.5rem;
 }
 
-.field__label .required { color: #CC9966; }
+.field__label .required { color: var(--accent-gold); }
 
 .field__label .optional {
   font-family: 'Helvetica', Arial, sans-serif;
   font-weight: 300;
   text-transform: none;
   letter-spacing: 0;
-  color: #3a3a3a;
+  color: var(--muted-dark);
   font-size: 10px;
   margin-left: 4px;
 }
@@ -274,7 +280,7 @@ select {
   font-family: 'Helvetica', Arial, sans-serif;
   font-weight: 400;
   font-size: 0.875rem;
-  color: #FFFFFF;
+  color: var(--text-primary);
   transition: border-color 0.2s, box-shadow 0.2s;
   width: 100%;
   outline: none;
@@ -283,12 +289,12 @@ select {
 input[type="text"]:focus,
 input[type="url"]:focus,
 select:focus {
-  border-color: #CC9966;
+  border-color: var(--accent-gold);
   box-shadow: 0 0 0 3px rgba(204,153,102,0.12);
 }
 
 input::placeholder {
-  color: #4a4a4a;
+  color: #6a6a6a;
   font-family: 'Helvetica', Arial, sans-serif;
   font-weight: 300;
 }
@@ -310,7 +316,7 @@ select option { background: #111; color: #ddd; }
   font-style: italic;
   font-size: 11px;
   letter-spacing: -0.02em;
-  color: #3d3d3d;
+  color: var(--note-accent);
   margin: 0 0 1.25rem;
 }
 
@@ -320,7 +326,7 @@ select option { background: #111; color: #ddd; }
 
 .btn-primary {
   flex: 1;
-  background: linear-gradient(180deg, #FFBB77 0%, #CC9966 100%);
+  background: linear-gradient(180deg, var(--accent-light) 0%, var(--accent-gold) 100%);
   border: none;
   border-radius: 0.75rem;
   padding: 0.75rem 1.5rem;
@@ -346,11 +352,11 @@ select option { background: #111; color: #ddd; }
   font-size: 11px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #757575;
+  color: var(--text-subtle);
   cursor: pointer;
   transition: border-color 0.15s, color 0.15s, transform 0.1s;
 }
-.btn-secondary:hover { border-color: #444; color: #DDDDDD; }
+.btn-secondary:hover { border-color: #444; color: #EEEEEE; }
 .btn-secondary:active { transform: scale(0.97); }
 
 /* ── Preview card ──────────────────────────────────────────── */
@@ -367,7 +373,7 @@ select option { background: #111; color: #ddd; }
   align-items: center;
   gap: 6px;
   background: #1a1500;
-  border: 1px solid #CC9966;
+  border: 1px solid var(--accent-gold);
   border-radius: 0.5rem;
   padding: 6px 12px;
   font-family: 'Helvetica', Arial, sans-serif;
@@ -375,7 +381,7 @@ select option { background: #111; color: #ddd; }
   font-size: 10px;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: #FFBB77;
+  color: var(--accent-light);
   cursor: pointer;
   transition: background 0.15s, transform 0.1s;
 }
@@ -395,7 +401,7 @@ select option { background: #111; color: #ddd; }
   font-family: 'Helvetica', Arial, sans-serif;
   font-weight: 400;
   font-size: 0.8rem;
-  color: #FFBB77;
+  color: var(--accent-light);
   word-break: break-all;
   line-height: 1.6;
   margin: 0;
@@ -417,7 +423,7 @@ select option { background: #111; color: #ddd; }
   border-width: 1px;
   border-style: solid;
 }
-.badge__key { opacity: 0.5; }
+.badge__key { opacity: 0.6; color: var(--text-muted); }
 
 /* ── Empty state ───────────────────────────────────────────── */
 
@@ -433,7 +439,7 @@ select option { background: #111; color: #ddd; }
   font-family: 'Times New Roman', serif;
   font-weight: 400;
   font-style: italic;
-  color: #3a3a3a;
+  color: var(--text-subtle);
   font-size: 0.875rem;
   letter-spacing: -0.02em;
   margin: 0;
@@ -454,7 +460,7 @@ select option { background: #111; color: #ddd; }
   font-size: 10px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: #DDDDDD;
+  color: #EEEEEE;
   margin: 0;
 }
 
@@ -462,7 +468,7 @@ select option { background: #111; color: #ddd; }
   font-family: 'Helvetica', Arial, sans-serif;
   font-weight: 300;
   font-size: 10px;
-  color: #3a3a3a;
+  color: var(--text-subtle);
   letter-spacing: 0.05em;
   margin: 2px 0 0;
 }
@@ -475,12 +481,12 @@ select option { background: #111; color: #ddd; }
   font-size: 10px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #3a3a3a;
+  color: var(--text-subtle);
   cursor: pointer;
   transition: color 0.15s;
   padding: 0;
 }
-.btn-clear-all:hover { color: #cc4444; }
+.btn-clear-all:hover { color: #ff8a8a; }
 
 .history-list { display: flex; flex-direction: column; gap: 0.5rem; }
 
@@ -488,7 +494,7 @@ select option { background: #111; color: #ddd; }
   font-family: 'Times New Roman', serif;
   font-weight: 400;
   font-style: italic;
-  color: #333;
+  color: var(--text-subtle);
   font-size: 0.875rem;
   letter-spacing: -0.02em;
   text-align: center;
@@ -532,9 +538,10 @@ select option { background: #111; color: #ddd; }
   padding: 2px 6px;
   border-width: 1px;
   border-style: solid;
+  color: var(--text-muted);
 }
 
-.badge--source   { background: #1a0f00; border-color: #CC9966; color: #FFBB77; }
+.badge--source   { background: #1a0f00; border-color: var(--accent-gold); color: var(--accent-light); }
 .badge--medium   { background: #0d1200; border-color: #667744; color: #AACC66; }
 .badge--campaign { background: #0f0d00; border-color: #AA8844; color: #DDBB66; }
 
@@ -542,7 +549,7 @@ select option { background: #111; color: #ddd; }
   font-family: 'Helvetica', Arial, sans-serif;
   font-weight: 300;
   font-size: 10px;
-  color: #333;
+  color: var(--text-subtle);
   margin-left: auto;
   flex-shrink: 0;
 }
@@ -551,7 +558,7 @@ select option { background: #111; color: #ddd; }
   font-family: 'Helvetica', Arial, sans-serif;
   font-weight: 300;
   font-size: 11px;
-  color: #444;
+  color: var(--muted-dark);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -571,7 +578,7 @@ select option { background: #111; color: #ddd; }
   border: none;
   border-radius: 0.5rem;
   padding: 6px;
-  color: #555;
+  color: var(--muted-dark);
   cursor: pointer;
   transition: color 0.15s, background 0.15s;
   display: flex;
@@ -579,9 +586,9 @@ select option { background: #111; color: #ddd; }
   justify-content: center;
 }
 .history-item__actions button svg { width: 14px; height: 14px; display: block; }
-.history-item__actions .btn-history-copy:hover { color: #FFBB77; background: #1a1200; }
-.history-item__actions .btn-history-load:hover { color: #CC9966; background: #1a1200; }
-.history-item__actions .btn-history-del:hover  { color: #cc4444; background: #180000; }
+.history-item__actions .btn-history-copy:hover { color: var(--accent-light); background: #1a1200; }
+.history-item__actions .btn-history-load:hover { color: var(--accent-gold); background: #1a1200; }
+.history-item__actions .btn-history-del:hover  { color: #ff8a8a; background: #180000; }
 
 /* ── Footer ────────────────────────────────────────────────── */
 
@@ -590,7 +597,7 @@ select option { background: #111; color: #ddd; }
 .footer__divider {
   width: 48px;
   height: 1px;
-  background: linear-gradient(90deg, #CC9966, #FFBB77, #CC9966);
+  background: linear-gradient(90deg, var(--accent-gold), var(--accent-light), var(--accent-gold));
   opacity: 0.3;
   margin: 0 auto 1rem;
   border-radius: 999px;
@@ -602,7 +609,7 @@ select option { background: #111; color: #ddd; }
   font-size: 10px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: #2a2a2a;
+  color: var(--text-subtle);
   margin: 0;
 }
 
@@ -612,7 +619,7 @@ select option { background: #111; color: #ddd; }
   font-style: italic;
   font-size: 11px;
   letter-spacing: -0.02em;
-  color: #252525;
+  color: var(--text-subtle);
   margin: 2px 0 0;
 }
 
@@ -624,6 +631,6 @@ select option { background: #111; color: #ddd; }
 }
 .fade-in { animation: fadeIn 0.25s ease; }
 
-/* ── Utilities ─────────────────────────────────────────────── */
+/* ── Utilities ───────────────────────────────────────────────── */
 
 .hidden { display: none !important; }
